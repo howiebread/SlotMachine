@@ -1,0 +1,33 @@
+﻿namespace SlotMachine;
+
+class Program
+{
+    
+    const int BET_AMOUNT = 10;
+    private const string USER_CHOOSES_TO_SPIN = "s";
+    private const string USER_CHOOSES_TO_QUIT = "q";
+    static int credits = 100;
+    static void Main(string[] args)
+    {
+        // Setting up grid and other game parameters.
+        int[,] slotGrid = new int[3, 3];
+        Random random = new Random();
+        Console.WriteLine("Welcome to Slot Machine!");
+        Console.WriteLine("Match three numbers in any row or diagonal to win!");
+
+        while (credits >= BET_AMOUNT)
+        {
+            Console.WriteLine($"/nCredits: {credits}");
+            Console.Write($"Press {USER_CHOOSES_TO_SPIN} to spin or {USER_CHOOSES_TO_QUIT} to quit: ");
+            string userInput = Console.ReadLine();
+            if (userInput == USER_CHOOSES_TO_SPIN)
+            {
+                credits -= BET_AMOUNT;
+            }
+            if (userInput.ToLower().Trim() == USER_CHOOSES_TO_QUIT)
+            {
+                break;
+            }
+        }
+    }
+}
