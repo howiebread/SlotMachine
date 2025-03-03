@@ -118,7 +118,7 @@ class Program
             // Diagonal win pays more credits.
             int winAmount = value + DIAGONAL_WIN_AMOUNT;
             totalWins += winAmount;
-            Console.WriteLine($"There is a match in diagonal (bottom-left to top-right)!  You win {winAmount} credits!");
+            Console.WriteLine($"There is a match in diagonal (top-left to bottom-right)!  You win {winAmount} credits!");
         }
         // Check diagonal from bottom-left to top-right for wins.
         if (grid[2,0] == grid[1,1] && grid[1,1] == grid[0,2])
