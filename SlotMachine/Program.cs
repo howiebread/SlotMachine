@@ -23,6 +23,14 @@ class Program
             if (userInput == USER_CHOOSES_TO_SPIN)
             {
                 credits -= BET_AMOUNT;
+                // Fill the grid with random values 1-6
+                for (int row = 0; row < 3; row++)
+                {
+                    for (int col = 0; col < 3; col++)
+                    {
+                        slotGrid[row, col] = random.Next(1, 7);
+                    }
+                }
             }
             if (userInput.ToLower().Trim() == USER_CHOOSES_TO_QUIT)
             {
