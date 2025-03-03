@@ -2,6 +2,7 @@
 
 class Program
 {
+    private const int ADD_TO_CURRENT_INDEX = 1;
     private const int ROW_NUMBER_NEEDED_FOR_MIDDLE_BORDER = 2;
     private const int BET_AMOUNT = 10;
     private const int SIZE_OF_GRID = 3;
@@ -95,7 +96,7 @@ class Program
                 int value = grid[row, 0];
                 int winAmount = value * BET_AMOUNT;
                 totalWins += winAmount;
-                Console.WriteLine($"There is a match in row {row + 1}! You win {winAmount} credits!");
+                Console.WriteLine($"There is a match in row {row + ADD_TO_CURRENT_INDEX}! You win {winAmount} credits!");
             }
                 
         }
@@ -107,7 +108,7 @@ class Program
                 int value = grid[0, col];
                 int winAmount = value + BET_AMOUNT;
                 totalWins += winAmount;
-                Console.WriteLine($"There is a match in column {col + 1}! You win {winAmount} credits!");
+                Console.WriteLine($"There is a match in column {col + ADD_TO_CURRENT_INDEX}! You win {winAmount} credits!");
             }
         }
         // Check diagonal from top-left to bottom-right for wins.
