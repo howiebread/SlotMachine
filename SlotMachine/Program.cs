@@ -31,6 +31,16 @@ class Program
                         slotGrid[row, col] = random.Next(1, 7);
                     }
                 }
+                // Display the grid.
+                Console.WriteLine("/nResults: ");
+                for (int row = 0; row < 3; row++)
+                {
+                    for (int col = 0; col < 3; col++)
+                    {
+                        Console.Write($"{slotGrid[row, col]} ");
+                    }
+                    Console.WriteLine();
+                }
             }
             if (userInput.ToLower().Trim() == USER_CHOOSES_TO_QUIT)
             {
