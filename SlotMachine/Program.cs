@@ -2,12 +2,12 @@
 
 class Program
 {
-    private const int PRESENT_ROW_NUMBER_FOR_MIDDLE_BORDER = 2;
+    private const int ROW_NUMBER_NEEDED_FOR_MIDDLE_BORDER = 2;
     private const int BET_AMOUNT = 10;
     private const int SIZE_OF_GRID = 3;
     private const int MINIMUM_RANDOM_NUMBER = 1;
     private const int MAXIMUM_RANDOM_NUMBER = 5;
-    private const int DIAGONALWIN_AMOUNT = 15;
+    private const int DIAGONAL_WIN_AMOUNT = 15;
     private const string USER_CHOOSES_TO_SPIN = "s";
     private const string USER_CHOOSES_TO_QUIT = "q";
     private static string userInput;
@@ -51,7 +51,7 @@ class Program
                     Console.WriteLine();
                     
                     // Middle or bottom border.
-                    if (row < PRESENT_ROW_NUMBER_FOR_MIDDLE_BORDER)
+                    if (row < ROW_NUMBER_NEEDED_FOR_MIDDLE_BORDER)
                     {
                         Console.WriteLine("├───┼───┼───┤");
                     }
@@ -105,7 +105,7 @@ class Program
             if (grid[0, col] == grid[1, col] && grid[1, col] == grid[2, col])
             {
                 int value = grid[0, col];
-                int winAmount = value * BET_AMOUNT;
+                int winAmount = value + BET_AMOUNT;
                 totalWins += winAmount;
                 Console.WriteLine($"There is a match in column {col + 1}! You win {winAmount} credits!");
             }
@@ -115,7 +115,7 @@ class Program
         {
             int value = grid[0, 0];
             // Diagonal win pays more credits.
-            int winAmount = value * DIAGONALWIN_AMOUNT;
+            int winAmount = value + DIAGONAL_WIN_AMOUNT;
             totalWins += winAmount;
             Console.WriteLine($"There is a match in diagonal (bottom-left to top-right)!  You win {winAmount} credits!");
         }
@@ -124,7 +124,7 @@ class Program
         {
             int value = grid[2,0];
             // Diagonal wins pay more credits.
-            int winAmount = value * DIAGONALWIN_AMOUNT;
+            int winAmount = value + DIAGONAL_WIN_AMOUNT;
             Console.WriteLine($"There is a match in diagonal (bottom-left to top-right)!  You win {winAmount} credits!");
         }
         return totalWins;
