@@ -42,15 +42,30 @@ class Program
                     }
                     Console.WriteLine();
                 }
+                
+                // Check for wins
+                int winnings = CheckForWins(slotGrid);
+                credits += winnings;
+
+                if (winnings == 0)
+                {
+                    Console.WriteLine("No matches won, Try again!");
+                }
             }
-            if (userInput.ToLower().Trim() == USER_CHOOSES_TO_QUIT)
+            else if (userInput.ToLower().Trim() == USER_CHOOSES_TO_QUIT)
             {
                 break;
             }
+            else
+            {
+                Console.WriteLine("Invalid input. Try again.");
+            }
         }
+        Console.WriteLine($"Game over! Final credits: {credits}");
+        Console.WriteLine("Thank you for playing!");
     }
 
-    static int checkForWins(int[,] grid)
+    static int CheckForWins(int[,] grid)
     {
         int totalWins = 0;
         
