@@ -65,6 +65,17 @@ class Program
             }
                 
         }
+        // Check vertical columns
+        for (int col = 0; col < 3; col++)
+        {
+            if (grid[0, col] == grid[1, col] && grid[1, col] == grid[2, col])
+            {
+                int value = grid[0, col];
+                int winAmount = value * BET_AMOUNT;
+                totalWins += winAmount;
+                Console.WriteLine($"There is a match in column {col + 1}! You win {winAmount} credits!");
+            }
+        }
             
     }
 }
