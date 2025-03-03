@@ -48,4 +48,23 @@ class Program
             }
         }
     }
+
+    static int checkForWins(int[,] grid)
+    {
+        int totalWins = 0;
+        
+        // Check horizontal rows
+        for (int row = 0; row < 3; row++)
+        {
+            if (grid[row, 0] == grid[row, 1] && grid[row, 1] == grid[row, 2])
+            {
+                int value = grid[row, 0];
+                int winAmount = value * BET_AMOUNT;
+                totalWins += winAmount;
+                Console.WriteLine($"There is a match in row {row + 1}! You win {winAmount} credits!");
+            }
+                
+        }
+            
+    }
 }
