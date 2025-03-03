@@ -94,7 +94,7 @@ class Program
             if (grid[row, 0] == grid[row, 1] && grid[row, 1] == grid[row, 2])
             {
                 int value = grid[row, 0];
-                int winAmount = value * BET_AMOUNT;
+                int winAmount = value + BET_AMOUNT;
                 totalWins += winAmount;
                 Console.WriteLine($"There is a match in row {row + ADD_TO_CURRENT_INDEX}! You win {winAmount} credits!");
             }
