@@ -4,6 +4,7 @@ class Program
 {
     
     const int BET_AMOUNT = 10;
+    private const int DIAGONALWIN_AMOUNT = 15;
     private const string USER_CHOOSES_TO_SPIN = "s";
     private const string USER_CHOOSES_TO_QUIT = "q";
     static int credits = 100;
@@ -53,7 +54,7 @@ class Program
     {
         int totalWins = 0;
         
-        // Check horizontal rows
+        // Check horizontal rows for wins
         for (int row = 0; row < 3; row++)
         {
             if (grid[row, 0] == grid[row, 1] && grid[row, 1] == grid[row, 2])
@@ -65,7 +66,7 @@ class Program
             }
                 
         }
-        // Check vertical columns
+        // Check vertical columns for wins
         for (int col = 0; col < 3; col++)
         {
             if (grid[0, col] == grid[1, col] && grid[1, col] == grid[2, col])
@@ -76,6 +77,23 @@ class Program
                 Console.WriteLine($"There is a match in column {col + 1}! You win {winAmount} credits!");
             }
         }
-            
+        // Check diagonal from top-left to bottom-right for wins.
+        if (grid[0, 0] == grid[1, 1] && grid[1, 1] == grid[2, 2])
+        {
+            int value = grid[0, 0];
+            // Diagonal win pays more credits.
+            int winAmount = value * DIAGONALWIN_AMOUNT;
+            totalWins += winAmount;
+            Console.WriteLine($"There is a match in diagonal (bottom-left to top-right)!  You win {winAmount} credits!");
+        }
+        // Check diagonal from bottom-left to top-right for wins.
+        if (grid[2,0] == grid[1,1] && grid[1,1] == grid[0,2])
+        {
+            int value = grid[2,0];
+            // Diagonal wins pay more credits.
+            int winAmount = value * DIAGONALWIN_AMOUNT;
+            Console.WriteLine($"There is a match in diagonal (bottom-left to top-right)!  You win {winAmount} credits!");
+        }
+        return totalWins;
     }
 }
