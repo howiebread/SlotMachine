@@ -9,7 +9,10 @@ class Program
     private const int MINIMUM_RANDOM_NUMBER = 1;
     private const int MAXIMUM_RANDOM_NUMBER = 5;
     private const int DIAGONAL_WIN_AMOUNT = 15;
-    private const string USER_CHOOSES_TO_SPIN = "s";
+    private const string USER_CHOOSES_CENTERLINE = "c";
+    private const string USER_CHOOSES_HORIZONTALS = "h";
+    private const string USER_CHOOSES_VERTICALS = "v";
+    private const string USER_CHOOSES_DIAGONALS = "d";
     private const string USER_CHOOSES_TO_QUIT = "q";
     private static string userInput;
     static int credits = 100;
@@ -24,52 +27,23 @@ class Program
         while (credits >= BET_AMOUNT)
         {
             Console.WriteLine($"\nCredits: {credits}");
-            Console.Write($"Press {USER_CHOOSES_TO_SPIN} to spin or {USER_CHOOSES_TO_QUIT} to quit: ");
+            Console.Write($"Choose which mode to play.  Press {USER_CHOOSES_CENTERLINE} for center line, {USER_CHOOSES_HORIZONTALS} for horizontals, {USER_CHOOSES_VERTICALS} for verticals, {USER_CHOOSES_DIAGONALS} for diagonals, or {USER_CHOOSES_TO_QUIT} to quit: ");
             userInput = Console.ReadLine();
-            if (userInput == USER_CHOOSES_TO_SPIN)
+            if (userInput.ToLower().Trim() == USER_CHOOSES_CENTERLINE)
             {
-                credits -= BET_AMOUNT;
-                // Fill the grid with random values 1-4
-                for (int row = 0; row < SIZE_OF_GRID; row++)
-                {
-                    for (int col = 0; col < SIZE_OF_GRID; col++)
-                    {
-                        slotGrid[row, col] = random.Next(MINIMUM_RANDOM_NUMBER, MAXIMUM_RANDOM_NUMBER);
-                    }
-                }
-                // Display the grid.
-                Console.WriteLine("\nResults: ");
-                // Top border
-                Console.WriteLine("┌───┬───┬───┐");
-                for (int row = 0; row < SIZE_OF_GRID; row++)
-                {
-                    // Making a vertical border for row content.
-                    Console.Write("|");
-                    for (int col = 0; col < SIZE_OF_GRID; col++)
-                    {
-                        Console.Write($" {slotGrid[row, col]} |");
-                    }
-                    Console.WriteLine();
-                    
-                    // Middle or bottom border.
-                    if (row < ROW_NUMBER_NEEDED_FOR_MIDDLE_BORDER)
-                    {
-                        Console.WriteLine("├───┼───┼───┤");
-                    }
-                    else
-                    {
-                        Console.WriteLine("└───┴───┴───┘");
-                    }
-                }
-                
-                // Check for wins
-                int winnings = CheckForWins(slotGrid);
-                credits += winnings;
-
-                if (winnings == 0)
-                {
-                    Console.WriteLine("No matches won, Try again!");
-                }
+                break;
+            }
+            else if (userInput.ToLower().Trim() == USER_CHOOSES_HORIZONTALS)
+            {
+                break;
+            }
+            else if (userInput.ToLower().Trim() == USER_CHOOSES_VERTICALS)
+            {
+                break;
+            }
+            else if (userInput.ToLower().Trim() == USER_CHOOSES_DIAGONALS)
+            {
+                break;
             }
             else if (userInput.ToLower().Trim() == USER_CHOOSES_TO_QUIT)
             {
@@ -78,6 +52,39 @@ class Program
             else
             {
                 Console.WriteLine("Invalid input. Try again.");
+            }
+        }
+        credits -= BET_AMOUNT;
+        // Fill the grid with random values 1-4
+        for (int row = 0; row < SIZE_OF_GRID; row++)
+        {
+            for (int col = 0; col < SIZE_OF_GRID; col++)
+            {
+                slotGrid[row, col] = random.Next(MINIMUM_RANDOM_NUMBER, MAXIMUM_RANDOM_NUMBER);
+            }
+        }
+        // Display the grid.
+        Console.WriteLine("\nResults: ");
+        // Top border
+        Console.WriteLine("┌───┬───┬───┐");
+        for (int row = 0; row < SIZE_OF_GRID; row++)
+        {
+            // Making a vertical border for row content.
+            Console.Write("|");
+            for (int col = 0; col < SIZE_OF_GRID; col++)
+            {
+                Console.Write($" {slotGrid[row, col]} |");
+            }
+            Console.WriteLine();
+                    
+            // Middle or bottom border.
+            if (row < ROW_NUMBER_NEEDED_FOR_MIDDLE_BORDER)
+            {
+                Console.WriteLine("├───┼───┼───┤");
+            }
+            else
+            {
+                Console.WriteLine("└───┴───┴───┘");
             }
         }
         Console.WriteLine($"\nGame over! Final credits: {credits}");
