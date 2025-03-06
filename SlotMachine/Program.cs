@@ -2,6 +2,7 @@
 
 class Program
 {
+    private const int STARTING_CREDITS = 100;
     private const int ADD_TO_CURRENT_INDEX = 1;
     private const int ROW_NUMBER_NEEDED_FOR_MIDDLE_BORDER = 2;
     private const int BET_AMOUNT = 10;
@@ -15,7 +16,7 @@ class Program
     private const string USER_CHOOSES_DIAGONALS = "d";
     private const string USER_CHOOSES_TO_QUIT = "q";
     private static string userInput;
-    static int credits = 100;
+    static int credits = STARTING_CREDITS;
 
     static void Main(string[] args)
     {
