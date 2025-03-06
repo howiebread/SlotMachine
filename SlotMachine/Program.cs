@@ -24,7 +24,7 @@ class Program
         int[,] slotGrid = new int[3, 3];
         Random random = new Random();
         Console.WriteLine("Welcome to Slot Machine!");
-        Console.WriteLine("Match three numbers in any row or diagonal to win!");
+        Console.WriteLine("Match three numbers in the mode you select to win!");
 
         while (credits >= BET_AMOUNT)
         {
