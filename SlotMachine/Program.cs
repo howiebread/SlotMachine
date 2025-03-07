@@ -2,6 +2,8 @@
 
 class Program
 {
+    private const int STARTING_INDEX = 0;
+    private const int RESET_VALUE = 0;
     private const int STARTING_CREDITS = 100;
     private const int ADD_TO_CURRENT_INDEX = 1;
     private const int ROW_NUMBER_NEEDED_FOR_MIDDLE_BORDER = 2;
@@ -40,11 +42,11 @@ class Program
             if (userInput == USER_CHOOSES_CENTERLINE || userInput == USER_CHOOSES_HORIZONTALS || userInput == USER_CHOOSES_VERTICALS || userInput == USER_CHOOSES_DIAGONALS)
             {
                 credits -= BET_AMOUNT;
-                winnings = 0;  // Resets winnings at the start of each round.
+                winnings = RESET_VALUE;  // Resets winnings at the start of each round.
                 // Fill the grid with random values 1-4
-                for (int row = 0; row < SIZE_OF_GRID; row++)
+                for (int row = STARTING_INDEX; row < SIZE_OF_GRID; row++)
                 {
-                    for (int col = 0; col < SIZE_OF_GRID; col++)
+                    for (int col = STARTING_INDEX; col < SIZE_OF_GRID; col++)
                     {
                         slotGrid[row, col] = random.Next(MINIMUM_RANDOM_NUMBER, MAXIMUM_RANDOM_NUMBER);
                     }
@@ -54,11 +56,11 @@ class Program
                 Console.WriteLine("\nResults: ");
                 // Top border
                 Console.WriteLine("┌───┬───┬───┐");
-                for (int row = 0; row < SIZE_OF_GRID; row++)
+                for (int row = STARTING_INDEX; row < SIZE_OF_GRID; row++)
                 {
                     // Making a vertical border for row content.
                     Console.Write("|");
-                    for (int col = 0; col < SIZE_OF_GRID; col++)
+                    for (int col = STARTING_INDEX; col < SIZE_OF_GRID; col++)
                     {
                         Console.Write($" {slotGrid[row, col]} |");
                     }
@@ -139,7 +141,7 @@ class Program
     {
         int totalWins = 0;
         // Check vertical rows for wins.
-        for (int col = 0; col < SIZE_OF_GRID; col++)
+        for (int col = STARTING_INDEX; col < SIZE_OF_GRID; col++)
         {
             if (grid[0, col] == grid[1, col] && grid[1, col] == grid[2, col])
             {
