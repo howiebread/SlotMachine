@@ -6,7 +6,8 @@ class Program
     private const int RESET_VALUE = 0;
     private const int STARTING_CREDITS = 100;
     private const int ADD_TO_CURRENT_INDEX = 1;
-    private const int ROW_NUMBER_NEEDED_FOR_MIDDLE_BORDER = 2;
+    private const int SUBTRACT_TO_CURRENT_INDEX = 1;
+    private const int NUMBER_TO_DIVIDE_FOR_MIDDLE_ROW = 2;
     private const int BET_AMOUNT = 10;
     private const int DEFAULT_SIZE_OF_GRID = 3;
     private const int MINIMUM_RANDOM_NUMBER = 1;
@@ -21,6 +22,7 @@ class Program
     static int credits = STARTING_CREDITS;
     private static int winnings;
     private static int sizeOfGrid = DEFAULT_SIZE_OF_GRID;
+    private static int index;
 
     static void Main(string[] args)
     {
@@ -32,15 +34,15 @@ class Program
         try
         {
             sizeOfGrid = Convert.ToInt32(Console.ReadLine());
-            if (sizeOfGrid < 3)
+            if (sizeOfGrid < DEFAULT_SIZE_OF_GRID)
             {
-                sizeOfGrid = 3; // Setting default grid size if user selects number smaller than 3.
+                sizeOfGrid = DEFAULT_SIZE_OF_GRID; // Setting default grid size if user selects number smaller than 3.
             }
         }
         catch
         {
             Console.WriteLine("Invalid input.  Using default grid size of 3.");
-            sizeOfGrid = 3;
+            sizeOfGrid = DEFAULT_SIZE_OF_GRID;
         }
         // Setting up grid and other game parameters.
         int[,] slotGrid = new int[sizeOfGrid, sizeOfGrid];
@@ -71,6 +73,14 @@ class Program
 
                 // Display the grid.
                 Console.WriteLine("\nResults: ");
+                for (int row = 0; row < sizeOfGrid; row++)
+                {
+                    for (int col = 0; col < sizeOfGrid; col++)
+                    {
+                        Console.Write($"{slotGrid[row, col]} ");
+                    }
+                    Console.WriteLine(); // New line after each row
+                }
                 
             }
               
@@ -113,7 +123,28 @@ class Program
     // Method to check for wins.
     static int CheckForCenter(int[,] grid)
     {
-       
+        int totalWins = 0;
+        int row = sizeOfGrid / NUMBER_TO_DIVIDE_FOR_MIDDLE_ROW; // This will get us the middle row.
+        // Check center row for wins.
+        bool allMatch = true;
+        int firstValue = grid[row, 0];
+
+        for (int col = 1; col < sizeOfGrid; col++)
+        {
+            if (grid[row, col] != firstValue)
+            {
+                allMatch = false;
+                break;
+            }
+        }
+
+        if (allMatch)
+        {
+            int winAmount = firstValue + BET_AMOUNT;
+            totalWins += winAmount;
+            Console.WriteLine($"There is a match in the center row!  You win {winAmount} credits!");
+        }
+        return totalWins;
     }
 
     static int CheckForVerticals(int[,] grid)
@@ -122,12 +153,23 @@ class Program
         // Check vertical rows for wins.
         for (int col = STARTING_INDEX; col < sizeOfGrid; col++)
         {
-            if (grid[0, col] == grid[1, col] && grid[1, col] == grid[2, col])
+            bool allMatch = true;
+            int firstValue = grid[0, col];
+
+            for (int row = 1; row < sizeOfGrid; row++)
             {
-                int value = grid[0, col];
-                int winAmount = value + BET_AMOUNT;
+                if (grid[row, col] != firstValue)
+                {
+                    allMatch = false;
+                    break;
+                }
+            }
+
+            if (allMatch)
+            {
+                int winAmount = firstValue + BET_AMOUNT;
                 totalWins += winAmount;
-                Console.WriteLine($"There is a match in column {col + ADD_TO_CURRENT_INDEX}! You win {winAmount} credits!");
+                Console.WriteLine($"There is a match in column {col + ADD_TO_CURRENT_INDEX}!  You win {winAmount} credits!");
             }
         }
         return totalWins;
@@ -138,24 +180,44 @@ class Program
         int totalWins = 0;
 
         // Check diagonal from top-left to bottom-right for wins.
-        if (grid[0, 0] == grid[1, 1] && grid[1, 1] == grid[2, 2])
+        bool allMatch = true;
+        int firstValue = grid[0, 0];
+
+        for (int index = 1; index < sizeOfGrid; index++)
         {
-            int value = grid[0, 0];
-            // Diagonal win pays more credits.
-            int winAmount = value + DIAGONAL_WIN_AMOUNT;
+            if (grid[index, index] != firstValue)
+            {
+                allMatch = false;
+                break;
+            }
+        }
+
+        if (allMatch)
+        {
+            int winAmount = firstValue + DIAGONAL_WIN_AMOUNT;
             totalWins += winAmount;
             Console.WriteLine($"There is a match in diagonal (top-left to bottom-right)!  You win {winAmount} credits!");
         }
 
         // Check diagonal from bottom-left to top-right for wins.
-        if (grid[2, 0] == grid[1, 1] && grid[1, 1] == grid[0, 2])
-        {
-            int value = grid[2, 0];
-            // Diagonal wins pay more credits.
-            int winAmount = value + DIAGONAL_WIN_AMOUNT;
-            Console.WriteLine($"There is a match in diagonal (bottom-left to top-right)!  You win {winAmount} credits!");
-            totalWins += winAmount;
-        }
+       allMatch = true;
+       firstValue = grid[sizeOfGrid - SUBTRACT_TO_CURRENT_INDEX, 0];
+
+       for (int index = 1; index < sizeOfGrid; index++)
+       {
+           if (grid[sizeOfGrid - SUBTRACT_TO_CURRENT_INDEX - index, index] != firstValue)
+           {
+               allMatch = false;
+               break;
+           }
+       }
+
+       if (allMatch)
+       {
+           int winAmount = firstValue + DIAGONAL_WIN_AMOUNT;
+           Console.WriteLine($"There is a match in diagonal (bottom-left to top-right)!  You win {winAmount} credits!");
+           totalWins += winAmount;
+       }
         return totalWins;
     }
 
@@ -166,12 +228,23 @@ class Program
         // Check horizontal rows for wins
         for (int row = 0; row < sizeOfGrid; row++)
         {
-            if (grid[row, 0] == grid[row, 1] && grid[row, 1] == grid[row, 2])
+            bool allMatch = true;
+            int firstValue = grid[row, 0];
+
+            for (int col = 1; col < sizeOfGrid; col++)
             {
-                int value = grid[row, 0];
-                int winAmount = value + BET_AMOUNT;
+                if (grid[row, col] != firstValue)
+                {
+                    allMatch = false;
+                    break;
+                }
+            }
+
+            if (allMatch)
+            {
+                int winAmount = firstValue + BET_AMOUNT;
                 totalWins += winAmount;
-                Console.WriteLine($"There is a match in row {row + ADD_TO_CURRENT_INDEX}! You win {winAmount} credits!");
+                Console.WriteLine($"There is a match in row {row + ADD_TO_CURRENT_INDEX}!  You win {winAmount} credits!");
             }
         }
         return totalWins;
