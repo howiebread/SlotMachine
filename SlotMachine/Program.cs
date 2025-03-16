@@ -224,6 +224,7 @@ class Program
     static int CheckForHorizontals(int[,] grid)
     {
         int totalWins = 0;
+        bool foundMatch = false;  
 
         // Check horizontal rows for wins
         for (int row = 0; row < sizeOfGrid; row++)
@@ -240,11 +241,16 @@ class Program
                 }
             }
 
-            if (allMatch)
+            if (allMatch && !foundMatch)
             {
                 int winAmount = firstValue + BET_AMOUNT;
                 totalWins += winAmount;
+                foundMatch = true;
                 Console.WriteLine($"There is a match in row {row + ADD_TO_CURRENT_INDEX}!  You win {winAmount} credits!");
+            }
+            else if (allMatch)
+            {
+                Console.WriteLine($"There is also a match in row {row + ADD_TO_CURRENT_INDEX}, but only one win is counted!");
             }
         }
         return totalWins;
