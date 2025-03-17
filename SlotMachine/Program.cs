@@ -53,12 +53,14 @@ class Program
             Console.WriteLine($"\nCredits: {credits}");
             Console.Write($"Choose which mode to play.  Press {USER_CHOOSES_CENTERLINE} for center line, {USER_CHOOSES_HORIZONTALS} for horizontals, {USER_CHOOSES_VERTICALS} for verticals, {USER_CHOOSES_DIAGONALS} for diagonals, or {USER_CHOOSES_TO_QUIT} to quit: ");
             userInput = Console.ReadLine();
+            // Create a list of user choices.
+            List<string> choices = new List<string> { USER_CHOOSES_DIAGONALS, USER_CHOOSES_VERTICALS, USER_CHOOSES_CENTERLINE, USER_CHOOSES_HORIZONTALS };
             if (userInput == USER_CHOOSES_TO_QUIT)
             {
                 break;
             }
-
-            if (userInput == USER_CHOOSES_CENTERLINE || userInput == USER_CHOOSES_HORIZONTALS || userInput == USER_CHOOSES_VERTICALS || userInput == USER_CHOOSES_DIAGONALS)
+            
+            if (choices.Contains(userInput))
             {
                 credits -= BET_AMOUNT;
                 winnings = RESET_VALUE;  // Resets winnings at the start of each round.
