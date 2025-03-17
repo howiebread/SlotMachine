@@ -30,18 +30,26 @@ class Program
         
         Console.WriteLine("Welcome to Slot Machine!");
         Console.WriteLine("Match three numbers in the mode you select to win!");
-        Console.WriteLine("Enter grid size (3 for 3x3, 4 for 4x4, etc.):");
+        Console.WriteLine("Enter an odd number for grid size (3 for 3x3, 5 for 5x5 etc.):");
         try
         {
             sizeOfGrid = Convert.ToInt32(Console.ReadLine());
+            // Check if the number is even.
+            if (sizeOfGrid % 2 == 0)
+            {
+               Console.WriteLine($"The grid size must be an odd number. Using default grid size of {DEFAULT_SIZE_OF_GRID}.");
+               sizeOfGrid = DEFAULT_SIZE_OF_GRID;
+            }
+
             if (sizeOfGrid < DEFAULT_SIZE_OF_GRID)
             {
-                sizeOfGrid = DEFAULT_SIZE_OF_GRID; // Setting default grid size if user selects number smaller than 3.
+                sizeOfGrid = DEFAULT_SIZE_OF_GRID;
+                Console.WriteLine($"Grid size is too small.  Using the minimum size of {DEFAULT_SIZE_OF_GRID} ");
             }
         }
         catch
         {
-            Console.WriteLine("Invalid input.  Using default grid size of 3.");
+            Console.WriteLine($"Invalid input.  Using default grid size of {DEFAULT_SIZE_OF_GRID}.");
             sizeOfGrid = DEFAULT_SIZE_OF_GRID;
         }
         // Setting up grid and other game parameters.
