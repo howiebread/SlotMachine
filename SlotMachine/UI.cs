@@ -16,4 +16,9 @@ public static class UI
     {
         Console.WriteLine();
     }
+
+    public static void OutputToUserSameLine(string message)
+    {
+        Console.Write(message);
+    }
 }

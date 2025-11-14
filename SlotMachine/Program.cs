@@ -72,7 +72,7 @@ class Program
                 {
                     for (int col = 0; col < sizeOfGrid; col++)
                     {
-                        UI.OutputToUser($"{slotGrid[row, col]} ");
+                        UI.OutputToUserSameLine($"{slotGrid[row, col]} ");
                     }
                     UI.AddLine(); // New line after each row
                 }
