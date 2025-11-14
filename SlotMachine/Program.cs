@@ -2,7 +2,6 @@
 
 class Program
 {
-    
     private static string userInput;
     static int credits = Constants.STARTING_CREDITS;
     private static int winnings;
@@ -68,14 +67,7 @@ class Program
 
                 // Display the grid.
                 UI.OutputToUser("\nResults: ");
-                for (int row = 0; row < sizeOfGrid; row++)
-                {
-                    for (int col = 0; col < sizeOfGrid; col++)
-                    {
-                        UI.OutputToUserSameLine($"{slotGrid[row, col]} ");
-                    }
-                    UI.AddLine(); // New line after each row
-                }
+                UI.DisplayGrid(sizeOfGrid,slotGrid);
                 
             }
               

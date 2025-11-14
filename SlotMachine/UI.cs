@@ -21,4 +21,16 @@ public static class UI
     {
         Console.Write(message);
     }
+
+    public static void DisplayGrid(int sizeOfGrid, int [,]slotGrid)
+    {
+        for (int row = 0; row < sizeOfGrid; row++)
+        {
+            for (int col = 0; col < sizeOfGrid; col++)
+            {
+                Console.Write($"{slotGrid[row, col]} ");
+            }
+            Console.WriteLine(); // New line after each row
+        }
+    }
 }
