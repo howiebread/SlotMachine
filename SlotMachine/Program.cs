@@ -38,7 +38,7 @@ class Program
         }
         // Setting up grid and other game parameters.
         int[,] slotGrid = new int[sizeOfGrid, sizeOfGrid];
-        Random random = new Random();
+        
 
         while (credits >= Constants.BET_AMOUNT)
         {
@@ -57,13 +57,7 @@ class Program
                 credits -= Constants.BET_AMOUNT;
                 winnings = Constants.RESET_VALUE;  // Resets winnings at the start of each round.
                 // Fill the grid with random values 1-4
-                for (int row = Constants.STARTING_INDEX; row < sizeOfGrid; row++)
-                {
-                    for (int col = Constants.STARTING_INDEX; col < sizeOfGrid; col++)
-                    {
-                        slotGrid[row, col] = random.Next(Constants.MINIMUM_RANDOM_NUMBER, Constants.MAXIMUM_RANDOM_NUMBER);
-                    }
-                }
+                UI.FillGrid(sizeOfGrid,slotGrid);
 
                 // Display the grid.
                 UI.OutputToUser("\nResults: ");
