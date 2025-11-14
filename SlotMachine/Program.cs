@@ -2,139 +2,124 @@
 
 class Program
 {
-    private const int STARTING_INDEX = 0;
-    private const int RESET_VALUE = 0;
-    private const int STARTING_CREDITS = 100;
-    private const int ADD_TO_CURRENT_INDEX = 1;
-    private const int SUBTRACT_TO_CURRENT_INDEX = 1;
-    private const int NUMBER_TO_DIVIDE_FOR_MIDDLE_ROW = 2;
-    private const int BET_AMOUNT = 10;
-    private const int DEFAULT_SIZE_OF_GRID = 3;
-    private const int MINIMUM_RANDOM_NUMBER = 1;
-    private const int MAXIMUM_RANDOM_NUMBER = 5;
-    private const int DIAGONAL_WIN_AMOUNT = 15;
-    private const string USER_CHOOSES_CENTERLINE = "c";
-    private const string USER_CHOOSES_HORIZONTALS = "h";
-    private const string USER_CHOOSES_VERTICALS = "v";
-    private const string USER_CHOOSES_DIAGONALS = "d";
-    private const string USER_CHOOSES_TO_QUIT = "q";
+    
     private static string userInput;
-    static int credits = STARTING_CREDITS;
+    static int credits = Constants.STARTING_CREDITS;
     private static int winnings;
-    private static int sizeOfGrid = DEFAULT_SIZE_OF_GRID;
+    private static int sizeOfGrid = Constants.DEFAULT_SIZE_OF_GRID;
     private static int index;
 
     static void Main(string[] args)
     {
         // Ask user for the grid size.
         
-        Console.WriteLine("Welcome to Slot Machine!");
-        Console.WriteLine("Match three numbers in the mode you select to win!");
-        Console.WriteLine("Enter an odd number for grid size (3 for 3x3, 5 for 5x5 etc.):");
+        UI.OutputToUser("Welcome to Slot Machine!");
+        UI.OutputToUser("Match three numbers in the mode you select to win!");
+        UI.OutputToUser("Enter an odd number for grid size (3 for 3x3, 5 for 5x5 etc.):");
         try
         {
             sizeOfGrid = Convert.ToInt32(Console.ReadLine());
             // Check if the number is even.
             if (sizeOfGrid % 2 == 0)
             {
-               Console.WriteLine($"The grid size must be an odd number. Using default grid size of {DEFAULT_SIZE_OF_GRID}.");
-               sizeOfGrid = DEFAULT_SIZE_OF_GRID;
+               UI.OutputToUser($"The grid size must be an odd number. Using default grid size of {Constants.DEFAULT_SIZE_OF_GRID}.");
+               sizeOfGrid = Constants.DEFAULT_SIZE_OF_GRID;
             }
 
-            if (sizeOfGrid < DEFAULT_SIZE_OF_GRID)
+            if (sizeOfGrid < Constants.DEFAULT_SIZE_OF_GRID)
             {
-                sizeOfGrid = DEFAULT_SIZE_OF_GRID;
-                Console.WriteLine($"Grid size is too small.  Using the minimum size of {DEFAULT_SIZE_OF_GRID} ");
+                sizeOfGrid = Constants.DEFAULT_SIZE_OF_GRID;
+                UI.OutputToUser($"Grid size is too small.  Using the minimum size of {Constants.DEFAULT_SIZE_OF_GRID} ");
             }
         }
         catch
         {
-            Console.WriteLine($"Invalid input.  Using default grid size of {DEFAULT_SIZE_OF_GRID}.");
-            sizeOfGrid = DEFAULT_SIZE_OF_GRID;
+            UI.OutputToUser($"Invalid input.  Using default grid size of {Constants.DEFAULT_SIZE_OF_GRID}.");
+            sizeOfGrid = Constants.DEFAULT_SIZE_OF_GRID;
         }
         // Setting up grid and other game parameters.
         int[,] slotGrid = new int[sizeOfGrid, sizeOfGrid];
         Random random = new Random();
 
-        while (credits >= BET_AMOUNT)
+        while (credits >= Constants.BET_AMOUNT)
         {
-            Console.WriteLine($"\nCredits: {credits}");
-            Console.Write($"Choose which mode to play.  Press {USER_CHOOSES_CENTERLINE} for center line, {USER_CHOOSES_HORIZONTALS} for horizontals, {USER_CHOOSES_VERTICALS} for verticals, {USER_CHOOSES_DIAGONALS} for diagonals, or {USER_CHOOSES_TO_QUIT} to quit: ");
-            userInput = Console.ReadLine();
+            UI.OutputToUser($"\nCredits: {credits}");
+            UI.OutputToUser($"Choose which mode to play.  Press {Constants.USER_CHOOSES_CENTERLINE} for center line, {Constants.USER_CHOOSES_HORIZONTALS} for horizontals, {Constants.USER_CHOOSES_VERTICALS} for verticals, {Constants.USER_CHOOSES_DIAGONALS} for diagonals, or {Constants.USER_CHOOSES_TO_QUIT} to quit: ");
+            userInput = UI.TakeInput();
             // Create a list of user choices.
-            List<string> choices = new List<string> { USER_CHOOSES_DIAGONALS, USER_CHOOSES_VERTICALS, USER_CHOOSES_CENTERLINE, USER_CHOOSES_HORIZONTALS };
-            if (userInput == USER_CHOOSES_TO_QUIT)
+            List<string> choices = new List<string> { Constants.USER_CHOOSES_DIAGONALS, Constants.USER_CHOOSES_VERTICALS, Constants.USER_CHOOSES_CENTERLINE, Constants.USER_CHOOSES_HORIZONTALS };
+            if (userInput == Constants.USER_CHOOSES_TO_QUIT)
             {
                 break;
             }
             
             if (choices.Contains(userInput))
             {
-                credits -= BET_AMOUNT;
-                winnings = RESET_VALUE;  // Resets winnings at the start of each round.
+                credits -= Constants.BET_AMOUNT;
+                winnings = Constants.RESET_VALUE;  // Resets winnings at the start of each round.
                 // Fill the grid with random values 1-4
-                for (int row = STARTING_INDEX; row < sizeOfGrid; row++)
+                for (int row = Constants.STARTING_INDEX; row < sizeOfGrid; row++)
                 {
-                    for (int col = STARTING_INDEX; col < sizeOfGrid; col++)
+                    for (int col = Constants.STARTING_INDEX; col < sizeOfGrid; col++)
                     {
-                        slotGrid[row, col] = random.Next(MINIMUM_RANDOM_NUMBER, MAXIMUM_RANDOM_NUMBER);
+                        slotGrid[row, col] = random.Next(Constants.MINIMUM_RANDOM_NUMBER, Constants.MAXIMUM_RANDOM_NUMBER);
                     }
                 }
 
                 // Display the grid.
-                Console.WriteLine("\nResults: ");
+                UI.OutputToUser("\nResults: ");
                 for (int row = 0; row < sizeOfGrid; row++)
                 {
                     for (int col = 0; col < sizeOfGrid; col++)
                     {
-                        Console.Write($"{slotGrid[row, col]} ");
+                        UI.OutputToUser($"{slotGrid[row, col]} ");
                     }
-                    Console.WriteLine(); // New line after each row
+                    UI.AddLine(); // New line after each row
                 }
                 
             }
               
-            if (userInput.ToLower().Trim() == USER_CHOOSES_CENTERLINE)
+            if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_CENTERLINE)
             {
                 winnings = CheckForCenter(slotGrid);
             }
 
-            else if (userInput.ToLower().Trim() == USER_CHOOSES_HORIZONTALS)
+            else if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_HORIZONTALS)
             {
                winnings = CheckForHorizontals(slotGrid);
             }
 
-            else if (userInput.ToLower().Trim() == USER_CHOOSES_VERTICALS)
+            else if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_VERTICALS)
             {
                 winnings = CheckForVerticals(slotGrid);
             }
 
-            else if (userInput.ToLower().Trim() == USER_CHOOSES_DIAGONALS)
+            else if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_DIAGONALS)
             {
                 winnings = CheckForDiagonals(slotGrid);
             }
             
             else
             {
-                Console.WriteLine("Invalid input. Try again.");
+                UI.OutputToUser("Invalid input. Try again.");
             }  
             
             credits += winnings;
             if (winnings == 0)
             {
-                Console.WriteLine("No matches won try again.");
+                UI.OutputToUser("No matches won try again.");
             }
         }
        
-        Console.WriteLine($"\nGame over! Final credits: {credits}");
-        Console.WriteLine("Thank you for playing!");
+        UI.OutputToUser($"\nGame over! Final credits: {credits}");
+        UI.OutputToUser("Thank you for playing!");
     }
     
     // Method to check for wins.
     static int CheckForCenter(int[,] grid)
     {
         int totalWins = 0;
-        int row = sizeOfGrid / NUMBER_TO_DIVIDE_FOR_MIDDLE_ROW; // This will get us the middle row.
+        int row = sizeOfGrid / Constants.NUMBER_TO_DIVIDE_FOR_MIDDLE_ROW; // This will get us the middle row.
         // Check center row for wins.
         bool allMatch = true;
         int firstValue = grid[row, 0];
@@ -150,7 +135,7 @@ class Program
 
         if (allMatch)
         {
-            int winAmount = firstValue + BET_AMOUNT;
+            int winAmount = firstValue + Constants.BET_AMOUNT;
             totalWins += winAmount;
             Console.WriteLine($"There is a match in the center row!  You win {winAmount} credits!");
         }
@@ -161,7 +146,7 @@ class Program
     {
         int totalWins = 0;
         // Check vertical rows for wins.
-        for (int col = STARTING_INDEX; col < sizeOfGrid; col++)
+        for (int col = Constants.STARTING_INDEX; col < sizeOfGrid; col++)
         {
             bool allMatch = true;
             int firstValue = grid[0, col];
@@ -177,9 +162,9 @@ class Program
 
             if (allMatch)
             {
-                int winAmount = firstValue + BET_AMOUNT;
+                int winAmount = firstValue + Constants.BET_AMOUNT;
                 totalWins += winAmount;
-                Console.WriteLine($"There is a match in column {col + ADD_TO_CURRENT_INDEX}!  You win {winAmount} credits!");
+                Console.WriteLine($"There is a match in column {col + Constants.ADD_TO_CURRENT_INDEX}!  You win {winAmount} credits!");
             }
         }
         return totalWins;
@@ -204,18 +189,18 @@ class Program
 
         if (allMatch)
         {
-            int winAmount = firstValue + DIAGONAL_WIN_AMOUNT;
+            int winAmount = firstValue + Constants.DIAGONAL_WIN_AMOUNT;
             totalWins += winAmount;
             Console.WriteLine($"There is a match in diagonal (top-left to bottom-right)!  You win {winAmount} credits!");
         }
 
         // Check diagonal from bottom-left to top-right for wins.
        allMatch = true;
-       firstValue = grid[sizeOfGrid - SUBTRACT_TO_CURRENT_INDEX, 0];
+       firstValue = grid[sizeOfGrid - Constants.SUBTRACT_TO_CURRENT_INDEX, 0];
 
        for (int index = 1; index < sizeOfGrid; index++)
        {
-           if (grid[sizeOfGrid - SUBTRACT_TO_CURRENT_INDEX - index, index] != firstValue)
+           if (grid[sizeOfGrid - Constants.SUBTRACT_TO_CURRENT_INDEX - index, index] != firstValue)
            {
                allMatch = false;
                break;
@@ -224,7 +209,7 @@ class Program
 
        if (allMatch)
        {
-           int winAmount = firstValue + DIAGONAL_WIN_AMOUNT;
+           int winAmount = firstValue + Constants.DIAGONAL_WIN_AMOUNT;
            Console.WriteLine($"There is a match in diagonal (bottom-left to top-right)!  You win {winAmount} credits!");
            totalWins += winAmount;
        }
@@ -253,14 +238,14 @@ class Program
 
             if (allMatch && !foundMatch)
             {
-                int winAmount = firstValue + BET_AMOUNT;
+                int winAmount = firstValue + Constants.BET_AMOUNT;
                 totalWins += winAmount;
                 foundMatch = true;
-                Console.WriteLine($"There is a match in row {row + ADD_TO_CURRENT_INDEX}!  You win {winAmount} credits!");
+                Console.WriteLine($"There is a match in row {row + Constants.ADD_TO_CURRENT_INDEX}!  You win {winAmount} credits!");
             }
             else if (allMatch)
             {
-                Console.WriteLine($"There is also a match in row {row + ADD_TO_CURRENT_INDEX}, but only one win is counted!");
+                Console.WriteLine($"There is also a match in row {row + Constants.ADD_TO_CURRENT_INDEX}, but only one win is counted!");
             }
         }
         return totalWins;
