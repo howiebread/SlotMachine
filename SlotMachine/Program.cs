@@ -63,7 +63,7 @@ class Program
                 UI.OutputToUser("\nResults: ");
                 UI.DisplayGrid(sizeOfGrid,slotGrid);
             }
-            Logic.CheckWinnings(userInput, slotGrid, sizeOfGrid, winnings, credits);
+            credits = Logic.CheckWinnings(userInput, slotGrid, sizeOfGrid, winnings, credits);
         }
        
         UI.OutputToUser($"\nGame over! Final credits: {credits}");
