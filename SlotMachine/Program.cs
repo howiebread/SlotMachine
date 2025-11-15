@@ -62,39 +62,8 @@ class Program
                 // Display the grid.
                 UI.OutputToUser("\nResults: ");
                 UI.DisplayGrid(sizeOfGrid,slotGrid);
-                
             }
-              
-            if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_CENTERLINE)
-            {
-                winnings = Logic.CheckForCenter(slotGrid, sizeOfGrid);
-            }
-
-            else if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_HORIZONTALS)
-            {
-               winnings = Logic.CheckForHorizontals(slotGrid, sizeOfGrid);
-            }
-
-            else if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_VERTICALS)
-            {
-                winnings = Logic.CheckForVerticals(slotGrid, sizeOfGrid);
-            }
-
-            else if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_DIAGONALS)
-            {
-                winnings = Logic.CheckForDiagonals(slotGrid, sizeOfGrid);
-            }
-            
-            else
-            {
-                UI.OutputToUser("Invalid input. Try again.");
-            }  
-            
-            credits += winnings;
-            if (winnings == 0)
-            {
-                UI.OutputToUser("No matches won try again.");
-            }
+            Logic.CheckWinnings(userInput, slotGrid, sizeOfGrid, winnings, credits);
         }
        
         UI.OutputToUser($"\nGame over! Final credits: {credits}");

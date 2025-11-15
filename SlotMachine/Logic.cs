@@ -137,4 +137,43 @@ public static class Logic
         }
         return totalWins;
     }
+
+    public static int CheckWinnings(string userInput, int[,] slotGrid, int sizeOfGrid, int winnings, int credits)
+    {
+        List<string> UserChoices = new List<string> {Constants.USER_CHOOSES_CENTERLINE, Constants.USER_CHOOSES_DIAGONALS, Constants.USER_CHOOSES_HORIZONTALS, Constants.USER_CHOOSES_VERTICALS};
+        if (UserChoices.Contains(userInput))
+        {
+            
+            if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_CENTERLINE)
+            {
+                winnings = CheckForCenter(slotGrid, sizeOfGrid);
+            }
+
+            else if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_HORIZONTALS)
+            {
+                winnings = CheckForHorizontals(slotGrid, sizeOfGrid);
+            }
+
+            else if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_VERTICALS)
+            {
+                winnings = CheckForVerticals(slotGrid, sizeOfGrid);
+            }
+
+            else if (userInput.ToLower().Trim() == Constants.USER_CHOOSES_DIAGONALS)
+            {
+                winnings = CheckForDiagonals(slotGrid, sizeOfGrid);
+            }
+        }
+        else
+        {
+            UI.OutputToUser("Invalid input try again.");
+        }  
+            
+        credits += winnings;
+        if (winnings == 0)
+        {
+            UI.OutputToUser("No matches won try again.");
+        }
+        return credits;
+    }
 }
